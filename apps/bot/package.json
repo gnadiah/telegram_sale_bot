@@ -9,6 +9,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
+    "@telegram-sale-bot/shared": "workspace:*",
     "grammy": "^1.41.1"
   }
 }

@@ -1,7 +1,11 @@
 import React from "react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { ProductForm } from "./product-form";
+
+afterEach(() => {
+  cleanup();
+});
 
 describe("ProductForm", () => {
   it("submits a new product payload", async () => {
@@ -13,7 +17,7 @@ describe("ProductForm", () => {
     fireEvent.change(screen.getByLabelText(/product slug/i), { target: { value: "gpt-plus-1t" } });
     fireEvent.change(screen.getByLabelText(/product price/i), { target: { value: "30000" } });
     fireEvent.change(screen.getByLabelText(/product sort order/i), { target: { value: "5" } });
-    fireEvent.click(screen.getByRole("button", { name: /tao product/i }));
+    fireEvent.click(screen.getByRole("button", { name: /create product/i }));
 
     await waitFor(() =>
       expect(onSubmit).toHaveBeenCalledWith({
@@ -25,5 +29,13 @@ describe("ProductForm", () => {
         sortOrder: 5
       })
     );
+  });
+
+  it("blocks submission when there are no categories yet", async () => {
+    const onSubmit = vi.fn().mockResolvedValue(undefined);
+    render(<ProductForm categories={[]} onSubmit={onSubmit} />);
+
+    expect(screen.getByText(/create at least one category before creating products/i)).toBeTruthy();
+    expect(screen.getByRole("button", { name: /create product/i })).toHaveProperty("disabled", true);
   });
 });

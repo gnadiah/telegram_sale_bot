@@ -11,7 +11,7 @@ describe("CategoryForm", () => {
     fireEvent.change(screen.getByLabelText(/category name/i), { target: { value: "Chat GPT" } });
     fireEvent.change(screen.getByLabelText(/category slug/i), { target: { value: "chat-gpt" } });
     fireEvent.change(screen.getByLabelText(/category sort order/i), { target: { value: "3" } });
-    fireEvent.click(screen.getByRole("button", { name: /tao category/i }));
+    fireEvent.click(screen.getByRole("button", { name: /create category/i }));
 
     await waitFor(() =>
       expect(onSubmit).toHaveBeenCalledWith({

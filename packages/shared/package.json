@@ -2,6 +2,10 @@
   "name": "@telegram-sale-bot/shared",
   "private": true,
   "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./env": "./src/env.ts"
+  },
   "scripts": {
     "lint": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",

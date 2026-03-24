@@ -3,7 +3,7 @@ import type { Request, Response } from "express";
 import { requireAdminRequest } from "../auth/admin-auth.guard";
 import { createProduct, listProductsForAdmin, updateProduct } from "./catalog.service";
 import { importInventory } from "../inventory/inventory-import.service";
-import { getStockSummary } from "../inventory/stock-summary.service";
+import { getStockSummary, listAvailableStockItems } from "../inventory/stock-summary.service";
 import { getSingleParam } from "../shared/http";
 
 type CreateProductRequest = {
@@ -89,5 +89,12 @@ export class AdminProductsController {
     await requireAdminRequest(request);
 
     return getStockSummary(getSingleParam(request.params.id, "id"));
+  }
+
+  @Get("/:id/stock-items")
+  async stockItems(@Req() request: Request) {
+    await requireAdminRequest(request);
+
+    return listAvailableStockItems(getSingleParam(request.params.id, "id"));
   }
 }

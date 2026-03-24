@@ -7,7 +7,7 @@
     "dev:bot": "pnpm --filter @telegram-sale-bot/bot dev",
     "dev:admin": "pnpm --filter @telegram-sale-bot/admin dev",
     "lint": "pnpm -r lint",
-    "test": "pnpm -r test",
+    "test": "pnpm -r --workspace-concurrency=1 test",
     "typecheck": "pnpm -r typecheck"
   },
   "devDependencies": {

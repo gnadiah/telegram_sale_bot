@@ -14,7 +14,7 @@ describe("LoginForm", () => {
 
     fireEvent.change(screen.getByLabelText(/username/i), { target: { value: "admin" } });
     fireEvent.change(screen.getByLabelText(/password/i), { target: { value: "secret123" } });
-    fireEvent.click(screen.getByRole("button", { name: /dang nhap/i }));
+    fireEvent.click(screen.getByRole("button", { name: /sign in/i }));
 
     await waitFor(() =>
       expect(onSubmit).toHaveBeenCalledWith({ password: "secret123", username: "admin" })
@@ -27,8 +27,8 @@ describe("LoginForm", () => {
 
     fireEvent.change(screen.getByLabelText(/username/i), { target: { value: "admin" } });
     fireEvent.change(screen.getByLabelText(/password/i), { target: { value: "wrong-password" } });
-    fireEvent.click(screen.getByRole("button", { name: /dang nhap/i }));
+    fireEvent.click(screen.getByRole("button", { name: /sign in/i }));
 
-    await waitFor(() => expect(screen.getByText(/dang nhap that bai/i)).toBeTruthy());
+    await waitFor(() => expect(screen.getByText(/sign-in failed/i)).toBeTruthy());
   });
 });

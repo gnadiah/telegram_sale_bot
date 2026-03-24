@@ -8,12 +8,13 @@ describe("catalog flow", () => {
       { id: "cat-2", name: "Claude" }
     ]);
 
-    expect(view.text).toContain("DANH MUC SAN PHAM");
+    expect(view.text).toContain("🛍️ DANH MỤC SẢN PHẨM");
+    expect(view.text).toContain("Vui lòng chọn nhóm sản phẩm bạn muốn xem");
     expect(view.buttons.map((button) => button.label)).toEqual([
-      "Chat GPT",
-      "Claude",
-      "Lam moi",
-      "Trang chu"
+      "📁 Chat GPT",
+      "📁 Claude",
+      "🔄 Làm mới",
+      "🏠 Trang chủ"
     ]);
   });
 
@@ -24,14 +25,15 @@ describe("catalog flow", () => {
     ]);
 
     expect(view.text).toContain("Chat GPT");
-    expect(view.text).toContain("GPT PLUS 1T - 30.000d - ton 5");
-    expect(view.text).toContain("GPT TEAM - 50.000d - ton 0");
+    expect(view.text).toContain("Chọn gói phù hợp với nhu cầu của bạn");
+    expect(view.text).toContain("👤 GPT PLUS 1T • 30.000đ • 📦 Còn 5");
+    expect(view.text).toContain("👤 GPT TEAM • 50.000đ • 📦 Hết hàng");
     expect(view.buttons.map((button) => button.label)).toEqual([
-      "GPT PLUS 1T",
-      "GPT TEAM",
-      "Quay lai",
-      "Lam moi",
-      "Trang chu"
+      "👤 GPT PLUS 1T",
+      "🚫 GPT TEAM",
+      "⬅️ Quay lại",
+      "🔄 Làm mới",
+      "🏠 Trang chủ"
     ]);
   });
 });

@@ -139,6 +139,7 @@ ADMIN_ACCESS_TOKEN_SECRET=replace-me
 ADMIN_ACCESS_TOKEN_TTL_MINUTES=15
 ADMIN_REFRESH_TOKEN_DAYS=30
 ADMIN_REFRESH_COOKIE_NAME=tsb_refresh
+CORS_ALLOWED_ORIGINS=http://localhost:3000
 
 BOT_API_TOKEN=replace-me
 TELEGRAM_BOT_TOKEN=replace-me
@@ -154,9 +155,18 @@ Giải thích nhanh:
 - `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`: cấu hình kết nối PostgreSQL
 - `BOT_API_TOKEN`: token nội bộ để bot gọi API
 - `ADMIN_ACCESS_TOKEN_SECRET`, `ADMIN_ACCESS_TOKEN_TTL_MINUTES`, `ADMIN_REFRESH_TOKEN_DAYS`, `ADMIN_REFRESH_COOKIE_NAME`: cấu hình cho admin access/refresh token flow
+- `CORS_ALLOWED_ORIGINS`: danh sách origin được phép gọi admin API từ browser, phân tách bằng dấu phẩy
 - `TELEGRAM_BOT_TOKEN`: token bot lấy từ BotFather
 - `API_BASE_URL`: bot gọi API qua biến này
 - `NEXT_PUBLIC_API_BASE_URL`: admin web gọi API qua biến này
+
+Repo hiện dùng `root .env` chung ở thư mục gốc:
+
+- `apps/api` và các script như `db:migrate` load `.env` qua `apps/api/src/config/env.ts`
+- `apps/bot` load `.env` qua `apps/bot/src/config/env.ts`
+- `apps/admin` load root `.env` qua `apps/admin/next.config.ts`, rồi đọc `NEXT_PUBLIC_*` qua config layer trong app
+
+Vì vậy bạn chỉ cần cấu hình một file `.env` ở root repo, không cần tạo `.env` riêng cho từng app.
 
 ### Giá trị local khuyến nghị
 
@@ -176,6 +186,7 @@ ADMIN_ACCESS_TOKEN_SECRET=local-dev-secret
 ADMIN_ACCESS_TOKEN_TTL_MINUTES=15
 ADMIN_REFRESH_TOKEN_DAYS=30
 ADMIN_REFRESH_COOKIE_NAME=tsb_refresh
+CORS_ALLOWED_ORIGINS=http://localhost:3000
 
 BOT_API_TOKEN=local-bot-api-secret
 TELEGRAM_BOT_TOKEN=replace-me
@@ -496,6 +507,7 @@ Chưa có:
 Kiểm tra:
 
 - `NEXT_PUBLIC_API_BASE_URL` có trỏ đúng về API không
+- `CORS_ALLOWED_ORIGINS` có chứa origin của admin web không, ví dụ `http://localhost:3000`
 - API có đang chạy không
 - browser có nhận được `refresh cookie` không
 - `ADMIN_ACCESS_TOKEN_SECRET` có bị đổi giữa các lần restart API không

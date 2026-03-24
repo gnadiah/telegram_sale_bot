@@ -1,12 +1,15 @@
 import { defineConfig } from "drizzle-kit";
+import { getEnv } from "./src/config/env";
+
+const env = getEnv();
 
 export default defineConfig({
   dbCredentials: {
-    database: process.env.DB_NAME ?? "telegram_sale_bot",
-    host: process.env.DB_HOST ?? "localhost",
-    password: process.env.DB_PASSWORD ?? "postgres",
-    port: Number(process.env.DB_PORT ?? "5432"),
-    user: process.env.DB_USER ?? "postgres"
+    database: env.database.database,
+    host: env.database.host,
+    password: env.database.password,
+    port: env.database.port,
+    user: env.database.user
   },
   dialect: "postgresql",
   out: "./drizzle",

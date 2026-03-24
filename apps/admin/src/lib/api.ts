@@ -1,7 +1,8 @@
 import { authStore } from "./auth-store";
 import type { AdminRole, AuthSuccessPayload } from "./auth";
+import { getEnv } from "./env";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8080";
+const API_BASE_URL = getEnv().apiBaseUrl;
 
 type CategoryInput = {
   isActive: boolean;
@@ -266,6 +267,21 @@ export async function importInventoryFile(input: { filename: string; productId: 
     },
     method: "POST"
   });
+}
+
+export async function getProductStockItems(productId: string) {
+  return fetchJson<{
+    items: Array<{
+      content: string;
+      createdAt: string;
+      id: string;
+      importBatchId?: string | null;
+      productId: string;
+      soldAt?: string | null;
+      soldOrderId?: string | null;
+      status: string;
+    }>;
+  }>(`/admin/products/${productId}/stock-items`);
 }
 
 export async function getAdminUsers() {

@@ -2,7 +2,9 @@ import "@tsed/platform-express";
 import cookieParser from "cookie-parser";
 import express from "express";
 import { Configuration, Injectable } from "@tsed/di";
+import { getEnv } from "./config/env";
 import { initializeDatabase } from "./config/db";
+import { createCorsMiddleware } from "./middlewares/cors";
 import { ensureDefaultAdminUser } from "./modules/auth/admin-auth.service";
 import { HealthController } from "./modules/health/health.controller";
 import { AdminAuthController } from "./modules/auth/admin-auth.controller";
@@ -15,8 +17,9 @@ import { AdminOrdersController } from "./modules/orders/admin-orders.controller"
 
 @Configuration({
   acceptMimes: ["application/json"],
-  httpPort: process.env.PORT ? Number(process.env.PORT) : 8080,
+  httpPort: getEnv().port,
   middlewares: [
+    createCorsMiddleware(),
     express.json(),
     express.urlencoded({ extended: true }),
     cookieParser()

@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 244 247 251;
+  --foreground: 15 23 42;
+  --card: 255 255 255;
+  --border: 226 232 240;
+  --muted: 241 245 249;
+  --muted-foreground: 100 116 139;
+  --primary: 37 99 235;
+  --primary-foreground: 248 250 252;
+  --ring: 59 130 246;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply min-h-screen bg-background font-sans text-foreground antialiased;
+  }
+
+  a {
+    @apply text-inherit no-underline;
+  }
+}

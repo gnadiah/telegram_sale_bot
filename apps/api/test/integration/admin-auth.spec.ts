@@ -63,6 +63,31 @@ describe("admin auth", () => {
     expect(session?.expiresAt).toBeInstanceOf(Date);
   });
 
+  it("allows credentialed admin requests from the configured web origin", async () => {
+    const request = SuperTest(PlatformTest.callback());
+    const origin = "http://localhost:3000";
+
+    const preflight = await request
+      .options("/admin/auth/login")
+      .set("Origin", origin)
+      .set("Access-Control-Request-Method", "POST")
+      .set("Access-Control-Request-Headers", "content-type")
+      .expect(204);
+
+    expect(preflight.headers["access-control-allow-origin"]).toBe(origin);
+    expect(preflight.headers["access-control-allow-credentials"]).toBe("true");
+    expect(preflight.headers["vary"]).toContain("Origin");
+
+    const login = await request
+      .post("/admin/auth/login")
+      .set("Origin", origin)
+      .send({ username: "admin", password: "secret123" })
+      .expect(200);
+
+    expect(login.headers["access-control-allow-origin"]).toBe(origin);
+    expect(login.headers["access-control-allow-credentials"]).toBe("true");
+  });
+
   it("returns me from a bearer access token", async () => {
     const request = SuperTest(PlatformTest.callback());
     const login = await request

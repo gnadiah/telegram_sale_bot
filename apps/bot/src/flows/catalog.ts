@@ -17,12 +17,12 @@ export function renderCategoryMenu(categories: CategoryViewInput[]) {
     buttons: [
       ...categories.map((category) => ({
         action: `category:${category.id}`,
-        label: category.name
+        label: `📁 ${category.name}`
       })),
       { ...REFRESH_BUTTON, action: "refresh:categories" },
       HOME_BUTTON
     ],
-    text: "DANH MUC SAN PHAM\nChon nhom san pham hoac goi ban muon mua:"
+    text: "🛍️ DANH MỤC SẢN PHẨM\nVui lòng chọn nhóm sản phẩm bạn muốn xem:"
   };
 }
 
@@ -31,13 +31,15 @@ export function renderProductMenu(categoryName: string, products: ProductViewInp
     buttons: [
       ...products.map((product) => ({
         action: `product:${product.id}`,
-        label: product.name
+        label: product.stock > 0 ? `👤 ${product.name}` : `🚫 ${product.name}`
       })),
       { ...BACK_BUTTON, action: "back:categories" },
       { ...REFRESH_BUTTON, action: "refresh:products" },
       HOME_BUTTON
     ],
-    text: [`${categoryName}`, "", ...products.map(formatProductLine)].join("\n")
+    text: [`${categoryName}`, "Chọn gói phù hợp với nhu cầu của bạn:", "", ...products.map(formatProductLine)].join(
+      "\n"
+    )
   };
 }
 
@@ -46,5 +48,7 @@ function formatCurrency(amount: number) {
 }
 
 function formatProductLine(product: ProductViewInput) {
-  return `${product.name} - ${formatCurrency(product.price)}d - ton ${product.stock}`;
+  const stockText = product.stock > 0 ? `Còn ${product.stock}` : "Hết hàng";
+
+  return `👤 ${product.name} • ${formatCurrency(product.price)}đ • 📦 ${stockText}`;
 }

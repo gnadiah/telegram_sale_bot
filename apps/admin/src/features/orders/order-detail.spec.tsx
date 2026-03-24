@@ -19,6 +19,6 @@ describe("OrderDetail", () => {
 
     expect(screen.getByText(/line-a/i)).toBeTruthy();
     expect(screen.getByText(/line-b/i)).toBeTruthy();
-    expect(screen.getByText(/buyer/i)).toBeTruthy();
+    expect(screen.getByText(/^buyer$/i)).toBeTruthy();
   });
 });

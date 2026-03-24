@@ -103,4 +103,55 @@ describe("admin inventory import", () => {
       name: "Stock Product"
     });
   });
+
+  it("lists available stock items for a product", async () => {
+    const { request } = await createAuthenticatedAdminRequest();
+
+    const categoryResponse = await request
+      .post("/admin/categories")
+      .send({ name: "Inventory Category", slug: "inventory-category", sortOrder: 10, isActive: true })
+      .expect(201);
+
+    const productResponse = await request
+      .post("/admin/products")
+      .send({
+        categoryId: categoryResponse.body.category.id,
+        isActive: true,
+        name: "Inventory Product",
+        price: 10000,
+        slug: "inventory-product",
+        sortOrder: 10
+      })
+      .expect(201);
+
+    await request
+      .post(`/admin/products/${productResponse.body.product.id}/import-text`)
+      .send({ text: "line-1\nline-2\nline-3" })
+      .expect(200);
+
+    const response = await request
+      .get(`/admin/products/${productResponse.body.product.id}/stock-items`)
+      .expect(200);
+
+    expect(response.body.items).toHaveLength(3);
+    expect(response.body.items).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          content: "line-1",
+          productId: productResponse.body.product.id,
+          status: "available"
+        }),
+        expect.objectContaining({
+          content: "line-2",
+          productId: productResponse.body.product.id,
+          status: "available"
+        }),
+        expect.objectContaining({
+          content: "line-3",
+          productId: productResponse.body.product.id,
+          status: "available"
+        })
+      ])
+    );
+  });
 });
