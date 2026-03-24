@@ -1,0 +1,23 @@
+{
+  "name": "telegram-sale-bot",
+  "private": true,
+  "packageManager": "pnpm@10.32.1",
+  "scripts": {
+    "dev:api": "pnpm --filter @telegram-sale-bot/api dev",
+    "dev:bot": "pnpm --filter @telegram-sale-bot/bot dev",
+    "dev:admin": "pnpm --filter @telegram-sale-bot/admin dev",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.10",
+    "@types/express-session": "^1.18.2",
+    "@types/node": "^24.0.0",
+    "@types/supertest": "^7.2.0",
+    "jsdom": "^26.1.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  }
+}

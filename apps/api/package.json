@@ -1,0 +1,40 @@
+{
+  "name": "@telegram-sale-bot/api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "db:check": "drizzle-kit check --config drizzle.config.ts",
+    "db:generate": "drizzle-kit generate --config drizzle.config.ts",
+    "db:migrate": "drizzle-kit migrate --config drizzle.config.ts",
+    "db:push:dev": "drizzle-kit push --config drizzle.config.ts",
+    "db:studio": "drizzle-kit studio --config drizzle.config.ts",
+    "dev": "tsx watch src/index.ts",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --config vitest.config.ts --passWithNoTests",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "^0.4.1",
+    "@tsed/common": "^8.25.4",
+    "@tsed/core": "^8.25.4",
+    "@tsed/di": "^8.25.4",
+    "@tsed/exceptions": "^8.25.4",
+    "@tsed/logger": "^8.0.5",
+    "@tsed/platform-express": "^8.25.4",
+    "@tsed/platform-http": "^8.25.4",
+    "@tsed/schema": "^8.25.4",
+    "@types/express": "^5.0.6",
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "drizzle-orm": "^0.45.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "jose": "^6.2.2",
+    "pg": "^8.20.0",
+    "reflect-metadata": "^0.2.2",
+    "supertest": "^7.2.2"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.10"
+  }
+}
